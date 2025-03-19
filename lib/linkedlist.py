@@ -34,6 +34,19 @@ class LinkedList:
 
         return return_str
 
+    def __len__(self):
+        counter = 1
+        if (self.root_node.value is None) and (self.root_node.next is None):
+            return 0
+        elif self.root_node.value is not None and self.root_node.next is None:
+            return 1
+        else:
+            current_node = self.root_node
+            while current_node.next:
+                current_node = current_node.next
+                counter += 1
+            return counter
+
     def head(self):
         return self.root_node
 
@@ -45,6 +58,12 @@ class LinkedList:
             current_node = current_node.next
 
         return current_node
+
+    def prepend(self, value):
+        current_node = self.root_node
+        new_node = Node(value)
+        self.root_node = new_node
+        self.root_node.next = current_node
 
     def append(self, value):
         new_node = Node(value)

@@ -39,14 +39,12 @@ def test_append_to_unempty():
     assert linked_list.tail() == "one"
 
 
-@pytest.mark.skip("Not implemented")
 def test_prepend_to_empty_list():
     linked_list = LinkedList()
     linked_list.prepend("zero")
     assert linked_list.head() == "zero"
 
 
-@pytest.mark.skip("Not implemented")
 def test_prepend_to_list():
     linked_list = LinkedList("zero")
     linked_list.prepend("one")
@@ -54,10 +52,12 @@ def test_prepend_to_list():
 
 
 def test_size():
-    linked_list = LinkedList("zero")
-    assert linked_list.size() == 1
+    linked_list = LinkedList()
+    assert len(linked_list) == 0
+    linked_list.append("zero")
+    assert len(linked_list) == 1
     linked_list.append("one")
-    assert linked_list.size() == 2
+    assert len(linked_list) == 2
 
 
 def test_head():
