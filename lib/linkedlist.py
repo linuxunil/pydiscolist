@@ -4,26 +4,55 @@ from .node import Node
 class LinkedList:
     """A implementation of linked list"""
 
+    class LinkedListIterator:
+        def __init__(self, current_node=None):
+            self.root_node = current_node
+
+        def __iter__(self):
+            return self
+
+        def __next__(self):
+            if self.current_node is not None:
+                value = self.current_node.value
+                self.current_node = self.current_node.next
+                return value
+            else:
+                raise StopIteration
+
     def __init__(self, inital_value=None):
         self.root_node = Node(inital_value)
         self.size = 1 if inital_value else 0
 
+    def __iter__(self):
+        return self.LinkedListIterator(self.root_node)
+
+    def __str__(self):
+        return_str = ""
+        iterator = self.root_node
+        while iterator.next:
+            return_str.join(str(iterator.value))
+
+        return return_str
+
     def head(self):
-        return self.root_node.value
+        return self.root_node
 
     def tail(self):
+        if self.root_node is None:
+            return self.root_node
         current_node = self.root_node
-        while current_node.next is not None:
+        while current_node.next:
             current_node = current_node.next
 
         return current_node
 
     def append(self, value):
+        new_node = Node(value)
         current_node = self.root_node
-        # If we don't have anything in the list set the root_node to the value
-        if self.root_node.next is None:
-            self.root_node.value = value
-        # Otherwise find the last node and create a new node with the value
+        if current_node.value is None:
+            self.root_node = new_node
         else:
-            current_node = self.tail()
-            current_node.next = Node(value)
+            while current_node.next:
+                current_node = current_node.next
+
+            current_node.next = new_node
