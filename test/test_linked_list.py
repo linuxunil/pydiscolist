@@ -1,5 +1,4 @@
 from ..lib.linkedlist import LinkedList
-import pytest
 
 
 def test_create_empty_list():
@@ -37,6 +36,8 @@ def test_append_to_unempty():
     linked_list.append("one")
     assert linked_list.head() == "zero"
     assert linked_list.tail() == "one"
+    linked_list.append("two")
+    assert linked_list.tail() == "two"
 
 
 def test_prepend_to_empty_list():
@@ -82,9 +83,9 @@ def test_at():
 def test_pop():
     linked_list = LinkedList("zero")
     linked_list.append("one")
-    assert linked_list.tail("one")
+    assert linked_list.tail() == "one"
     assert linked_list.pop() == "one"
-    assert linked_list.tail() == "zeor"
+    assert linked_list.tail() == "zero"
 
 
 def test_contains():
@@ -95,10 +96,12 @@ def test_contains():
 
 def test_find():
     linked_list = LinkedList("zero")
-    assert linked_list.find("zero") == "zero"
+    linked_list.append("one")
+    linked_list.append("two")
+    assert linked_list.find("zero") == 0
+    assert linked_list.find("two") == 2
 
 
-@pytest.mark.skip("Currently hangs")
 def test_to_s():
     linked_list = LinkedList()
     linked_list.append("dog")
@@ -108,6 +111,6 @@ def test_to_s():
     linked_list.append("snake")
     linked_list.append("turtle")
     assert (
-        linked_list.to_s
+        linked_list.__str__()
         == "( dog ) -> ( cat ) -> ( parrot ) -> ( hamster ) -> ( snake ) -> ( turtle ) -> nil"
     )
